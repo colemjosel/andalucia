@@ -466,8 +466,19 @@ angular.module('ngCart.fulfilment', [])
 .service('ngCart.fulfilment.http', ['$http', 'ngCart', function($http, ngCart){
 
         this.checkout = function(settings){
+
             return $http.post(settings.url,
                 {data:ngCart.toObject()})
+                .success(function (data, status, headers, config) {
+                    
+                    //var datos = JSON.stringify(config);
+                    //var total = config.data.data.totalCost;
+                    //var items = config.data.data.items;
+
+                    //alert(items[0].name);
+
+                    document.getElementById("message").textContent = data;
+                });
         }
  }])
 

@@ -40,12 +40,42 @@ class EcommerceController extends BaseController {
 
     public function showCheckout()
     {
-        $categorias = Categorias::all();
-        $categoryfilter = View::make('ecommerce.modulos.categoryfilter', compact('categorias'));
+        $user_id = '1';
+        $estado = 'pendiente';
 
-        $data = json_decode(file_get_contents('php://input'));
-        return $data;
-        //return View::make('ecommerce.checkout', compact('items'));
+        $data = Request::all();
+ 
+        foreach ($data['data'] as $key => $value) {
+            if($key == 'totalCost'){
+                $totalCost = $value;
+            }else if($key == 'items'){
+                $items = array();
+                foreach ($value as $key2 => $value2) {
+                    if($key2 == 'id'){
+                        $items[] = $value2;
+                    }
+                }
+
+            }
+            
+        } 
+
+
+        $pedido = new Pedidos;
+
+        $pedido->user_id = $user_id;
+        $pedido->products_id = $items;
+        $pedido->total_cost = $totalCost;
+        $pedido->estado = $estado;
+
+        $pedido->save(); 
+
+        return 'guardó';
+
+        //$categorias = Categorias::all();
+        //$categoryfilter = View::make('ecommerce.modulos.categoryfilter', compact('categorias'));
+
+        //return View::make('ecommerce.checkout', compact('categoryfilter'));
     }
 
 }

@@ -13,8 +13,10 @@
 
 <ngcart-cart></ngcart-cart>
 
-<ngcart-checkout service="http" settings="{ url:'checkout' }">
-    Terminar html
-</ngcart-checkout>
+<!--a href="{{ route('checkout') }}">Generar comprobante</a-->
+
+<ngcart-checkout service="http" settings="{ url:'checkout' }">Generar comprobante</ngcart-checkout>
+
+<div id="message"></div>
 
 @stop

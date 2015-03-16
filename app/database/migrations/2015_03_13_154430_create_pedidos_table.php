@@ -12,7 +12,18 @@ class CreatePedidosTable extends Migration {
 	 */
 	public function up()
 	{
-		//
+		Schema::create('pedidos', function($table)
+        {
+            $table->increments('id');
+
+			$table->integer('user_id');
+			$table->integer('products_id');
+			$table->integer('total_cost');
+			$table->enum('estado', ['pendiente', 'canjeado', 'cancelado']);
+            
+
+            $table->timestamps();
+        });
 	}
 
 	/**
@@ -22,7 +33,7 @@ class CreatePedidosTable extends Migration {
 	 */
 	public function down()
 	{
-		//
+		Schema::drop('pedidos');
 	}
 
 }

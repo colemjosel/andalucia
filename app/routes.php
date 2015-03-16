@@ -1,5 +1,7 @@
 <?php
 
+
+//Ecommerce comp
 Route::get('/', ['as' => 'home', 'uses' => 'EcommerceController@showHome']);
 Route::get('categoria/{id}', ['as' => 'categoria', 'uses' => 'EcommerceController@showCategoria']);
 Route::get('producto/{id}', ['as' => 'producto', 'uses' => 'EcommerceController@showProducto']);
