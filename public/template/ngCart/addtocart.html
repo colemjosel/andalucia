@@ -9,10 +9,10 @@
                     ng-options=" v for v in qtyOpt"></select>
         </span>
         <a class="btn btn-sm btn-primary"
-           ng-click="ngCart.addItem(id, name, price, q, data)"
+           ng-click="ngCart.addItem(id, name, price, q, data, userpoints)"
            ng-transclude></a>
     </div>
     <mark  ng-show="inCart()">
-        This item is in your cart. <a ng-click="ngCart.removeItemById(id)" style="cursor: pointer;">Remove</a>
+        Este artículo está en el carrito. <a ng-click="ngCart.removeItemById(id)" style="cursor: pointer;">Quitar</a>
     </mark>
 </div>
