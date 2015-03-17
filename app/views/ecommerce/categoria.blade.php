@@ -21,7 +21,7 @@
                     {{$prod->costo}}
                 </div>
                 <div class="tools">
-                    <ngcart-addtocart id="{{ $prod->id }}" name="{{ $prod->titulo }}" price="{{ $prod->costo }}" quantity="1" quantity-max="5" data="item" userpoints="500">Añadir al carrito</ngcart-addtocart>
+                    <ngcart-addtocart id="{{ $prod->id }}" name="{{ $prod->titulo }}" price="{{ $prod->costo }}" quantity="1" quantity-max="5" data="item" userpoints="2000">Añadir al carrito</ngcart-addtocart>
                 </div>
             </div>
         @endforeach

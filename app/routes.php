@@ -7,3 +7,4 @@ Route::get('categoria/{id}', ['as' => 'categoria', 'uses' => 'EcommerceControlle
 Route::get('producto/{id}', ['as' => 'producto', 'uses' => 'EcommerceController@showProducto']);
 Route::get('summary', ['as' => 'summary', 'uses' => 'EcommerceController@showSummary']);
 Route::post('checkout', ['as' => 'checkout', 'uses' => 'EcommerceController@showCheckout']);
+Route::get('pdf/{id}', ['as' => 'pdf', 'uses' => 'EcommerceController@printPDF']);

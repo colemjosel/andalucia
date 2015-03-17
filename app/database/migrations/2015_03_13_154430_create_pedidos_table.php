@@ -17,7 +17,7 @@ class CreatePedidosTable extends Migration {
             $table->increments('id');
 
 			$table->integer('user_id');
-			$table->integer('products_id');
+			$table->string('products_id');
 			$table->integer('total_cost');
 			$table->enum('estado', ['pendiente', 'canjeado', 'cancelado']);
             

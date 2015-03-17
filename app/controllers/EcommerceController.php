@@ -49,13 +49,7 @@ class EcommerceController extends BaseController {
             if($key == 'totalCost'){
                 $totalCost = $value;
             }else if($key == 'items'){
-                $items = array();
-                foreach ($value as $key2 => $value2) {
-                    if($key2 == 'id'){
-                        $items[] = $value2;
-                    }
-                }
-
+                $items = $value;
             }
             
         } 
@@ -64,18 +58,27 @@ class EcommerceController extends BaseController {
         $pedido = new Pedidos;
 
         $pedido->user_id = $user_id;
+        $items = json_encode($items);
         $pedido->products_id = $items;
         $pedido->total_cost = $totalCost;
         $pedido->estado = $estado;
 
-        $pedido->save(); 
+        $pedido->save();
 
-        return 'guardó';
+        $the_id = $pedido->id;
 
-        //$categorias = Categorias::all();
-        //$categoryfilter = View::make('ecommerce.modulos.categoryfilter', compact('categorias'));
+        $comprobante = array('user_id' => $user_id, 'id' => $the_id, 'totalCost' => $totalCost, 'items' => $items, 'estado' => $estado);
 
-        //return View::make('ecommerce.checkout', compact('categoryfilter'));
+        return View::make('ecommerce.checkout', compact('comprobante', 'the_id'));
+    }
+
+    public function printPDF($id)
+    {
+        $pedido = Pedidos::where('id', '=', $id)->get();
+
+        $pdf = App::make('dompdf');
+        $pdf->loadHTML('<h1>Comprobante</h1><ul><li><b>User:</b> '.$pedido[0]->user_id.'</li><li><b>ID:</b>'.$pedido[0]->id.'</li><li><b>Costo:</b>'.$pedido[0]->totalCost.'</li><li><b>Estado:</b>'.$pedido[0]->estado.'</li><li><b>items:</b>'.$pedido[0]->products_id);
+        return $pdf->stream();
     }
 
 }

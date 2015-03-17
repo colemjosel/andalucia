@@ -477,7 +477,8 @@ angular.module('ngCart.fulfilment', [])
 
                     //alert(items[0].name);
 
-                    document.getElementById("message").textContent = data;
+                    ngCart.empty();
+                    document.getElementById("message").innerHTML = data;
                 });
         }
  }])

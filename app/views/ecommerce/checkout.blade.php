@@ -1,16 +1,20 @@
-@extends('ecommerce.layout')
+<h1>Comprobante</h1>
 
-@section('scripts')
+<ul>
+@foreach($comprobante as $key => $comp)
+	@if ($key === 'user_id')
+		<li><b>User:</b> {{$comp}}</li>
+	@elseif ($key === 'id')
+		<li><b>ID:</b> {{$comp}}</li>
+	@elseif ($key === 'totalCost')
+		<li><b>Costo en puntos:</b> {{$comp}}</li>
+	@elseif ($key === 'items')
+		<li><b>Items:</b> {{$comp}}</li>
+	@elseif ($key === 'estado')
+		<li><b>Estado:</b> {{$comp}}</li>
+	@endif
 
-{{HTML::script('js/angular.min.js')}}
-{{HTML::script('js/dist/ngCart.js')}}
-{{HTML::script('js/cart.js')}}
-{{HTML::style('css/cart.css')}}
+@endforeach
+</ul>
 
-@endsection
-
-@section('cart')
-
-       <h1>Comprobante</h1>
-
-@stop
+<a href="{{ route('pdf', [$the_id])}}">Imprimir</a>
