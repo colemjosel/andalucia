@@ -12,6 +12,9 @@
 		"barryvdh/laravel-dompdf": "*"
 	},
 	"autoload": {
+        "psr-4": {
+            "Componentes\\": "app/Componentes"
+        },
 		"classmap": [
 			"app/commands",
 			"app/controllers",

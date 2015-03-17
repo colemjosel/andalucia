@@ -8,3 +8,6 @@ Route::get('producto/{id}', ['as' => 'producto', 'uses' => 'EcommerceController@
 Route::get('summary', ['as' => 'summary', 'uses' => 'EcommerceController@showSummary']);
 Route::post('checkout', ['as' => 'checkout', 'uses' => 'EcommerceController@showCheckout']);
 Route::get('pdf/{id}', ['as' => 'pdf', 'uses' => 'EcommerceController@printPDF']);
+
+/*Comment*/
+Route::put('comment', ['as' => 'comment', 'uses' => 'CommentsController@save']);

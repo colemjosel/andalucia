@@ -124,6 +124,10 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'Barryvdh\DomPDF\ServiceProvider',
 
+        //Custom
+        'Componentes\Forms\FieldServiceProvider',
+        'Componentes\Comentarios\CommentServiceProvider',
+
 	),
 
 	/*
@@ -191,6 +195,10 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'PDF'             => 'Barryvdh\DomPDF\Facade',
+
+        //Custom
+        'Field'           => 'Componentes\Forms\Field',
+        'Commentario'           => 'Componentes\Comentarios\Comment',
 
 	),
 

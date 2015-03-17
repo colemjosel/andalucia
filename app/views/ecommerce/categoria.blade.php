@@ -17,11 +17,14 @@
                 <div class="img_product">
                     <img src="http://localhost/andalucia/public/img/{{$prod->imagen}}" alt="{{$prod->titulo}}" />
                 </div>
+                <div class="rate">
+                   <b>Rate:</b> {{$prod->rate}}
+                </div>
                 <div class="costo">
                     {{$prod->costo}}
                 </div>
                 <div class="tools">
-                    <ngcart-addtocart id="{{ $prod->id }}" name="{{ $prod->titulo }}" price="{{ $prod->costo }}" quantity="1" quantity-max="5" data="item" userpoints="2000">Añadir al carrito</ngcart-addtocart>
+                    <ngcart-addtocart id="{{ $prod->id }}" name="{{ $prod->titulo }}" price="{{ $prod->costo }}" quantity="1" quantity-max="5" data="item" userpoints="2000"  img="{{$prod->imagen}}">Añadir al carrito</ngcart-addtocart>
                 </div>
             </div>
         @endforeach

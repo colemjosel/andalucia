@@ -38,9 +38,9 @@ angular.module('ngCart', ['ngCart.directives'])
             };
         };
 
-        this.addItem = function (id, name, price, quantity, data, userpoints) {
+        this.addItem = function (id, name, price, quantity, data, userpoints, img) {
             var totalPoints =  parseFloat(this.totalCost())+ (parseFloat(price) * parseFloat(quantity));
-            //alert(totalPoints);
+            //alert(img);
             if(totalPoints <= userpoints){
                 var inCart = this.getItemById(id);
 
@@ -48,7 +48,7 @@ angular.module('ngCart', ['ngCart.directives'])
                     //Update quantity of an item if it's already in the cart
                     inCart.setQuantity(quantity, false);
                 } else {
-                    var newItem = new ngCartItem(id, name, price, quantity, data);
+                    var newItem = new ngCartItem(id, name, price, quantity, data, img);
                     this.$cart.items.push(newItem);
                     $rootScope.$broadcast('ngCart:itemAdded', newItem);
                 }
@@ -186,7 +186,7 @@ angular.module('ngCart', ['ngCart.directives'])
             _self.$cart.tax = storedCart.tax;
 
             angular.forEach(storedCart.items, function (item) {
-                _self.$cart.items.push(new ngCartItem(item._id,  item._name, item._price, item._quantity, item._data));
+                _self.$cart.items.push(new ngCartItem(item._id,  item._name, item._price, item._quantity, item._data, item._img));
             });
             this.$save();
         };
@@ -199,14 +199,25 @@ angular.module('ngCart', ['ngCart.directives'])
 
     .factory('ngCartItem', ['$rootScope', '$log', function ($rootScope, $log) {
 
-        var item = function (id, name, price, quantity, data) {
+        var item = function (id, name, price, quantity, data, img) {
             this.setId(id);
             this.setName(name);
             this.setPrice(price);
             this.setQuantity(quantity);
             this.setData(data);
+            this.setImg(img);
         };
 
+        item.prototype.setImg = function(img){
+            if (img)  this._img = img;
+            else {
+                $log.error('Image must be provided');
+            }
+        };
+
+        item.prototype.getImg = function(){
+            return this._img;
+        };
 
         item.prototype.setId = function(id){
             if (id)  this._id = id;
@@ -292,7 +303,9 @@ angular.module('ngCart', ['ngCart.directives'])
                 price: this.getPrice(),
                 quantity: this.getQuantity(),
                 data: this.getData(),
-                total: this.getTotal()
+                total: this.getTotal(),
+                img: this.getImg()
+
             }
         };
 
@@ -352,7 +365,8 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
                 quantityMax:'@',
                 price:'@',
                 data:'=',
-                userpoints:'@'
+                userpoints:'@',
+                img:'@'
             },
             transclude: true,
             templateUrl: 'http://localhost/andalucia/public/template/ngCart/addtocart.html',

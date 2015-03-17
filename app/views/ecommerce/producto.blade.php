@@ -19,13 +19,16 @@
     <div class="description">
         {{$producto[0]->description}}
     </div>
+    <div class="rate">
+        <b>Rate:</b> {{$rate}}
+    </div>
     <div class="costo">
         {{$producto[0]->costo}}
     </div>
     <div class="tools">
-        <ngcart-addtocart id="{{ $producto[0]->id }}" name="{{ $producto[0]->titulo }}" price="{{ $producto[0]->costo }}" quantity="1" quantity-max="5" data="item" userpoints="2000">Añadir al carrito</ngcart-addtocart>
+        <ngcart-addtocart id="{{ $producto[0]->id }}" name="{{ $producto[0]->titulo }}" price="{{ $producto[0]->costo }}" quantity="1" quantity-max="5" data="item" userpoints="2000" img="{{$producto[0]->imagen}}">Añadir al carrito</ngcart-addtocart>
     </div>
 </div>
 
-
+{{Commentario::comments($comments, $producto[0]->id)}}
 @stop

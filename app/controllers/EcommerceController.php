@@ -5,8 +5,7 @@ class EcommerceController extends BaseController {
 
 	public function showHome()
 	{
-        $categorias = Categorias::all();
-        $categoryfilter = View::make('ecommerce.modulos.categoryfilter', compact('categorias'));
+        $categoryfilter = $this->categoryFilter();
 
 		$productos = Productos::where('category_id', '=', '1')->get();
 		return View::make('ecommerce.categoria', compact('productos', 'categoryfilter'));
@@ -14,26 +13,31 @@ class EcommerceController extends BaseController {
 
     public function showCategoria($id)
     {
-        $categorias = Categorias::all();
-        $categoryfilter = View::make('ecommerce.modulos.categoryfilter', compact('categorias'));
+        $categoryfilter = $this->categoryFilter();
 
         $productos = Productos::where('category_id', '=', $id)->get();
+
+        $productos = $this->CatRate($productos);
+
         return View::make('ecommerce.categoria', compact('productos', 'categoryfilter'));
     }
 
     public function showProducto($id)
     {
-        $categorias = Categorias::all();
-        $categoryfilter = View::make('ecommerce.modulos.categoryfilter', compact('categorias'));
+        $categoryfilter = $this->categoryFilter();
+
+        $comments = Comments::where('component_item_id', '=', $id)->get();
+
+        $rate = $this->rate($comments);
+
 
         $producto = Productos::where('id', '=', $id)->get();
-        return View::make('ecommerce.producto', compact('producto', 'categoryfilter'));
+        return View::make('ecommerce.producto', compact('producto', 'categoryfilter', 'comments', 'rate'));
     }
 
     public function showSummary()
     {
-        $categorias = Categorias::all();
-        $categoryfilter = View::make('ecommerce.modulos.categoryfilter', compact('categorias'));
+        $categoryfilter = $this->categoryFilter();
 
         return View::make('ecommerce.summary',  compact('categoryfilter'));
     }
@@ -79,6 +83,49 @@ class EcommerceController extends BaseController {
         $pdf = App::make('dompdf');
         $pdf->loadHTML('<h1>Comprobante</h1><ul><li><b>User:</b> '.$pedido[0]->user_id.'</li><li><b>ID:</b>'.$pedido[0]->id.'</li><li><b>Costo:</b>'.$pedido[0]->totalCost.'</li><li><b>Estado:</b>'.$pedido[0]->estado.'</li><li><b>items:</b>'.$pedido[0]->products_id);
         return $pdf->stream();
+    }
+
+    //Category Filter
+    public function categoryFilter(){
+        $categorias = Categorias::all();
+        $categoryfilter = View::make('ecommerce.modulos.categoryfilter', compact('categorias'));
+
+        return $categoryfilter;
+    }
+
+    //Category rate
+    public function CatRate($productos){
+        $products2 = array();
+        foreach($productos as $pro){
+            $id = $pro->id;
+            $comments = Comments::where('component_item_id', '=', $id)->get();
+
+            $pro->rate = $this->rate($comments);
+
+            $products2[] = $pro;
+        }
+
+        return $products2;
+    }
+
+    //Rate
+    public function rate($comments){
+        $rate = array();
+
+        foreach($comments as $comment){
+            $rate[] = $comment->rate;
+        }
+
+        $total = count($rate);
+
+        if($total > 0) {
+            $sum = array_sum($rate);
+            $rate = ($sum / $total);
+        }else{
+            $rate = 'Se el primero en calificar';
+        }
+
+        return $rate;
     }
 
 }
