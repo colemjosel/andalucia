@@ -1,14 +1,8 @@
-<h1>Componente comentarios</h1>
+<h1>Comenta este producto</h1>
 
 {{ Form::open(['route' => 'comment', 'method' => 'PUT', 'role' => 'form', 'novalidate']) }}
-        {{ Field::radio('rate', '1') }}
-        {{ Field::radio('rate', '2') }}
-        {{ Field::radio('rate', '3') }}
-        {{ Field::radio('rate', '4') }}
-        {{ Field::radio('rate', '5') }}
 
-
-        {{ Field::text('title') }}
+        {{ Form::hidden('title') }}
         {{ Field::textarea('comment') }}
 
         {{ Form::hidden('user_id', '1') }}

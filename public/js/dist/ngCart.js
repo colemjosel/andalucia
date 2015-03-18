@@ -348,7 +348,7 @@ angular.module('ngCart', ['ngCart.directives'])
 ;'use strict';
 
 
-angular.module('ngCart.directives', ['ngCart.fulfilment'])
+angular.module('ngCart.directives', ['ngCart.fulfilment', 'ngCart.rate'])
 
     .controller('CartController',['$scope', 'ngCart', function($scope, ngCart) {
         $scope.ngCart = ngCart;
@@ -434,7 +434,130 @@ angular.module('ngCart.directives', ['ngCart.fulfilment'])
             transclude: true,
             templateUrl: 'http://localhost/andalucia/public/template/ngCart/checkout.html'
         };
-    }]);;
+    }])
+
+    .directive('ngcartRate', [function(){
+        return {
+            restrict : 'E',
+            controller : ('CartController', ['$scope', 'ngCart' , 'rateProvider', function($scope, ngCart, rateProvider) {
+                $scope.max = 5;
+
+                $scope.$watch('valor', function(newValue, oldValue) {
+                    if (newValue !== null && newValue !== undefined) {
+                        $scope.updateStars();
+                    }
+                });
+
+                $scope.updateStars = function(){
+                    var idx = 0;
+                    $scope.stars = [ ];
+                    for (idx = 0; idx < $scope.max; idx += 1) {
+                        $scope.stars.push({
+                            full: $scope.valor > idx
+                        });
+                    }
+
+                    return $scope.stars;
+                }
+
+                $scope.setRating = function(idx) {
+                   $scope.valor = idx + 1;
+
+                   $scope.rate($scope.valor);
+                };
+
+                $scope.hover = function(idx) {
+                    $scope.hoverIdx = idx;
+                };
+
+                $scope.stopHover = function() {
+                    $scope.hoverIdx = -1;
+                };
+
+                $scope.starColor = function(idx) {
+                    var starClass = 'rating-normal';
+                    if (idx <= $scope.hoverIdx) {
+                        starClass = 'rating-highlight';
+                    }
+                    return starClass;
+                };
+
+                $scope.rate = function (idx) {
+                    rateProvider.setService($scope.service);
+                    rateProvider.setSettings($scope.settings);
+                    rateProvider.setValor(idx);
+                    rateProvider.setId($scope.id);
+                    rateProvider.setUser($scope.user);
+                    var promise = rateProvider.checkout();
+                    console.log(promise);
+                }
+            }]),
+            scope: {
+                service:'@',
+                settings:'=',
+                valor: '@',
+                id: '@',
+                user: '@'
+        },
+            transclude: false,
+            templateUrl: 'http://localhost/andalucia/public/template/ngCart/rate.html'
+        };
+    }]);
+angular.module('ngCart.rate', [])
+    .service('rateProvider', ['$injector', function($injector){
+        this._obj = {
+            service : undefined,
+            settings : undefined,
+            valor : undefined,
+            id : undefined,
+            user : undefined
+        };
+
+        this.setService = function(service){
+            this._obj.service = service;
+        };
+
+        this.setSettings = function(settings){
+            this._obj.settings = settings;
+        };
+
+        this.setValor = function(valor){
+            this._obj.valor = valor;
+        };
+
+        this.setId = function(id){
+            this._obj.id = id;
+        };
+
+        this.setUser = function(user){
+            this._obj.user = user;
+        };
+
+        this.checkout = function(){
+            var provider = $injector.get('ngCart.rate.' + this._obj.service);
+            return provider.rate(this._obj.settings, this._obj.valor, this._obj.id, this._obj.user);
+
+        }
+
+    }])
+    .service('ngCart.rate.http', ['$http', 'ngCart', function($http, ngCart){
+
+        this.rate = function(settings, idx, prod_id, user){
+
+            var data = [{'rate':idx, 'prod_id':prod_id, 'user':user }];
+
+            //alert(JSON.stringify(data));
+
+            return $http.post(settings.url,
+                data)
+                .success(function (data, status, headers, config) {
+                    //alert('hola');
+                }).error(function(data, status, headers, config) {
+                    //alert('hola2');
+                });;
+        }
+    }]);
+
 angular.module('ngCart.fulfilment', [])
     .service('fulfilmentProvider', ['$injector', function($injector){
 

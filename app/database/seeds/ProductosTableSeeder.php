@@ -11,7 +11,7 @@ class ProductosTableSeeder extends Seeder {
 
 		foreach(range(1, 50) as $index)
 		{
-			$name = $faker->name;
+			$name = $faker->word;
 			Productos::create([
 				'category_id' 	=> $faker->randomElement([1, 2, 3, 4]),
 				'titulo' 		=> $name,

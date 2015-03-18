@@ -7,8 +7,12 @@ class EcommerceController extends BaseController {
 	{
         $categoryfilter = $this->categoryFilter();
 
-		$productos = Productos::where('category_id', '=', '1')->get();
-		return View::make('ecommerce.categoria', compact('productos', 'categoryfilter'));
+        $productos = Productos::where('category_id', '=', '1')->get();
+        $categoria = Categorias::where('id', '=', '1')->get();
+
+        $productos = $this->CatRate($productos);
+
+		return View::make('ecommerce.categoria', compact('productos', 'categoryfilter', 'categoria'));
 	}
 
     public function showCategoria($id)
@@ -124,7 +128,7 @@ class EcommerceController extends BaseController {
             $sum = array_sum($rate);
             $rate = ($sum / $total);
         }else{
-            $rate = 'Sin calificar';
+            $rate = 0;
         }
 
         return $rate;
