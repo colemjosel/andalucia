@@ -1,18 +1,24 @@
 <div ng-hide="attrs.id">
-    <a class="btn btn-lg btn-primary" ng-disabled="true" ng-transclude></a>
-
+    <a class="button expand" ng-disabled="true" ng-transclude></a>
 </div>
 <div ng-show="attrs.id">
-    <div>
-        <span ng-show="quantityMax">
-            <select name="quantity" id="quantity" ng-model="q"
-                    ng-options=" v for v in qtyOpt"></select>
+    <div class="CartTools">
+        <div class="left large-3">
+            <span class="prefix">+/-</span>
+        </div>
+
+        <span ng-show="quantityMax" class="left large-4">
+            <select name="quantity" id="quantity" ng-model="q" ng-options=" v for v in qtyOpt">
+            </select>
         </span>
-        <a class="btn btn-sm btn-primary"
+        
+        <a class="anadir button tiny left large-5"
            ng-click="ngCart.addItem(id, name, price, q, data, userpoints, img)"
            ng-transclude></a>
     </div>
-    <mark  ng-show="inCart()">
-        Este artículo está en el carrito. <a ng-click="ngCart.removeItemById(id)" style="cursor: pointer;">Quitar</a>
-    </mark>
+    <div class="contElim">
+        <mark class="eliminarProd"  ng-show="inCart()">
+            <a ng-click="ngCart.removeItemById(id)" style="cursor: pointer;">Eliminar artículo</a>
+        </mark>
+    </div>
 </div>

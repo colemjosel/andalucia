@@ -16,10 +16,11 @@ class EcommerceController extends BaseController {
         $categoryfilter = $this->categoryFilter();
 
         $productos = Productos::where('category_id', '=', $id)->get();
+        $categoria = Categorias::where('id', '=', $id)->get();
 
         $productos = $this->CatRate($productos);
 
-        return View::make('ecommerce.categoria', compact('productos', 'categoryfilter'));
+        return View::make('ecommerce.categoria', compact('productos', 'categoryfilter', 'categoria'));
     }
 
     public function showProducto($id)
@@ -76,6 +77,7 @@ class EcommerceController extends BaseController {
         return View::make('ecommerce.checkout', compact('comprobante', 'the_id'));
     }
 
+    //PDF
     public function printPDF($id)
     {
         $pedido = Pedidos::where('id', '=', $id)->get();
@@ -122,7 +124,7 @@ class EcommerceController extends BaseController {
             $sum = array_sum($rate);
             $rate = ($sum / $total);
         }else{
-            $rate = 'Se el primero en calificar';
+            $rate = 'Sin calificar';
         }
 
         return $rate;
