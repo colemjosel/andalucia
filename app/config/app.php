@@ -121,8 +121,11 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
+
+		//vendor
 		'Way\Generators\GeneratorsServiceProvider',
 		'Barryvdh\DomPDF\ServiceProvider',
+		'Ivanhalen\Pagination\PaginationServiceProvider',
 
         //Custom
         'Componentes\Forms\FieldServiceProvider',

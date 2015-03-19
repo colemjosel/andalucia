@@ -10,6 +10,7 @@
     {{HTML::style('css/style.css')}}
     {{HTML::style('css/foundation.css')}}
     {{HTML::script('js/vendor/modernizr.js')}}
+    {{HTML::script('http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')}}
 
     <title>E-commerce puntos</title>
 </head>
@@ -20,7 +21,6 @@
     </div>
 
     @yield('scripts')
-    {{HTML::script('js/vendor/jquery.js')}}
     {{HTML::script('js/foundation.min.js')}}
     <script>
         $(document).foundation();

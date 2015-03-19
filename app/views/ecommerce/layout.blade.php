@@ -2,10 +2,16 @@
 
 @section('scripts')
 
+
+{{HTML::script('js/scroll/jquery.waypoints.min.js')}}
+{{HTML::script('js/scroll/shortcuts/infinite.min.js')}}
+
 {{HTML::script('js/angular.min.js')}}
 {{HTML::script('js/dist/ngCart.js')}}
 {{HTML::script('js/cart.js')}}
 {{HTML::style('css/cart.css')}}
+
+
 
 @endsection
 

@@ -7,24 +7,24 @@ class EcommerceController extends BaseController {
 	{
         $categoryfilter = $this->categoryFilter();
 
-        $productos = Productos::where('category_id', '=', '1')->get();
+        $productos = Productos::where('category_id', '=', '1')->paginate(24);
         $categoria = Categorias::where('id', '=', '1')->get();
 
-        $productos = $this->CatRate($productos);
+        $rate = $this->CatRate($productos);
 
-		return View::make('ecommerce.categoria', compact('productos', 'categoryfilter', 'categoria'));
+		return View::make('ecommerce.categoria', compact('productos', 'categoryfilter', 'categoria', 'rate'));
 	}
 
     public function showCategoria($id)
     {
         $categoryfilter = $this->categoryFilter();
 
-        $productos = Productos::where('category_id', '=', $id)->get();
+        $productos = Productos::where('category_id', '=', $id)->paginate(24);
         $categoria = Categorias::where('id', '=', $id)->get();
 
-        $productos = $this->CatRate($productos);
+        $rate = $this->CatRate($productos);
 
-        return View::make('ecommerce.categoria', compact('productos', 'categoryfilter', 'categoria'));
+        return View::make('ecommerce.categoria', compact('productos', 'categoryfilter', 'categoria', 'rate'));
     }
 
     public function showProducto($id)

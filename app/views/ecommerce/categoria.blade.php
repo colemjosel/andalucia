@@ -1,10 +1,11 @@
 @extends('ecommerce.layout')
 
 @section('cart')
-    <div class="categoria row">
+    <div class="categoria row infinite-container">
         <h1>{{$categoria[0]->name}}</h1>
+        {{--*/ $var = 0; /*--}}
         @foreach($productos as $prod)
-            <div class="producto small-12 medium-4 large-2 xlarge-1 columns">
+            <div class="producto small-12 medium-4 large-2 xlarge-1 columns infinite-item">
                 <div class="img_product">
                     <a href="{{ route('producto',[$prod->id]) }}">
                         <img src="{{ route('home') }}/img/productos/{{$prod->imagen}}" alt="{{$prod->titulo}}" />
@@ -13,7 +14,8 @@
                 <div class="panel">
                     <h3><a href="{{ route('producto',[$prod->id]) }}"> {{$prod->titulo}}</a></h3>
                     <div class="rate">
-                        <ngcart-rate service="http" settings="{ url:'http://localhost/andalucia/public/rate' }" valor="{{$prod->rate}}" id="{{ $prod->id }}" user="1"></ngcart-rate>
+                        <ngcart-rate service="http" settings="{ url:'http://localhost/andalucia/public/rate' }" reload="$scope.$broadcast('REFRESH');" valor="{{$rate[$var]->rate}}" id="{{ $prod->id }}" user="1"></ngcart-rate>
+                        {{--*/ $var++; /*--}}
                     </div>
                     <div class="costo">
                         {{$prod->costo}} <i>puntos</i>
@@ -27,5 +29,8 @@
                 </div>
             </div>
         @endforeach
+
     </div>
+
+    {{$productos->links()}}
 @stop

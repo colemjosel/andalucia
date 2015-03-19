@@ -48,7 +48,7 @@ angular.module('ngCart', ['ngCart.directives'])
                     //Update quantity of an item if it's already in the cart
                     inCart.setQuantity(quantity, false);
                 } else {
-                    var newItem = new ngCartItem(id, name, price, quantity, data, img);
+                    var newItem = new ngCartItem(id, name, price, quantity, data, userpoints, img);
                     this.$cart.items.push(newItem);
                     $rootScope.$broadcast('ngCart:itemAdded', newItem);
                 }
@@ -186,7 +186,7 @@ angular.module('ngCart', ['ngCart.directives'])
             _self.$cart.tax = storedCart.tax;
 
             angular.forEach(storedCart.items, function (item) {
-                _self.$cart.items.push(new ngCartItem(item._id,  item._name, item._price, item._quantity, item._data, item._img));
+                _self.$cart.items.push(new ngCartItem(item._id,  item._name, item._price, item._quantity, item._data, item._userpoints, item._img));
             });
             this.$save();
         };
@@ -199,12 +199,13 @@ angular.module('ngCart', ['ngCart.directives'])
 
     .factory('ngCartItem', ['$rootScope', '$log', function ($rootScope, $log) {
 
-        var item = function (id, name, price, quantity, data, img) {
+        var item = function (id, name, price, quantity, data, userpoints,  img) {
             this.setId(id);
             this.setName(name);
             this.setPrice(price);
-            this.setQuantity(quantity);
+            this.setQuantity(quantity, false, userpoints, price, data);
             this.setData(data);
+            this.setUserpoints(userpoints);
             this.setImg(img);
         };
 
@@ -217,6 +218,17 @@ angular.module('ngCart', ['ngCart.directives'])
 
         item.prototype.getImg = function(){
             return this._img;
+        };
+
+        item.prototype.setUserpoints = function(userpoints){
+            if (userpoints)  this._userpoints = userpoints;
+            else {
+                $log.error('userpoints must be provided');
+            }
+        };
+
+        item.prototype.getUserpoints = function(){
+            return this._userpoints;
         };
 
         item.prototype.setId = function(id){
@@ -258,8 +270,11 @@ angular.module('ngCart', ['ngCart.directives'])
         };
 
 
-        item.prototype.setQuantity = function(quantity, relative){
+        item.prototype.setQuantity = function(quantity, relative, userpoints, price, data){
 
+            //var totalPoints =  parseFloat(this.totalCost())+ (parseFloat(price) * parseFloat(quantity));
+            //if(totalPoints <= userpoints){
+            //alert(userpoints + ' eeeee' + price);
 
             var quantityInt = parseInt(quantity);
             if (quantityInt % 1 === 0){

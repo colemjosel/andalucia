@@ -10,6 +10,7 @@ Route::get('summary', ['as' => 'summary', 'uses' => 'EcommerceController@showSum
 Route::post('checkout', ['as' => 'checkout', 'uses' => 'EcommerceController@showCheckout']);
 Route::get('pdf/{id}', ['as' => 'pdf', 'uses' => 'EcommerceController@printPDF']);
 
-/*Comment*/
+
+//Comment
 Route::put('comment', ['as' => 'comment', 'uses' => 'CommentsController@save']);
 Route::post('rate', ['as' => 'rate', 'uses' => 'CommentsController@rate']);

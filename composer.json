@@ -9,7 +9,8 @@
     },
 	"require": {
 		"laravel/framework": "4.2.*",
-		"barryvdh/laravel-dompdf": "*"
+		"barryvdh/laravel-dompdf": "*",
+		"ivanhalen/pagination": "dev-master"
 	},
 	"autoload": {
         "psr-4": {

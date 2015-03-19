@@ -9,7 +9,7 @@ class ProductosTableSeeder extends Seeder {
 	{
 		$faker = Faker::create();
 
-		foreach(range(1, 50) as $index)
+		foreach(range(1, 500) as $index)
 		{
 			$name = $faker->word;
 			Productos::create([
