@@ -18,7 +18,7 @@ class CommentsController extends BaseController {
             $comentario->component_item_id = $data['component_item_id'];
             $comentario->title = '';//$data['title'];
             $comentario->comment = $data['comment'];
-            $comentario->rate = $data['rate'];
+            $comentario->rate = 0;
 
             $comentario->save();
         }else{

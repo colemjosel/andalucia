@@ -11,9 +11,9 @@ class CommentBuilder {
         $this->view = $view;
     }
 
-    public function comments($comments, $id){
+    public function comments($comments, $id, $rate){
         
-        return $this->view->make('ecommerce.modulos.comments', compact('comments', 'id'));
+        return $this->view->make('ecommerce.modulos.comments', compact('comments', 'id', 'rate'));
     }
 
 }
