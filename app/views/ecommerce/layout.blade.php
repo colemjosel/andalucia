@@ -22,7 +22,7 @@
 		<div class="logo left">
 			<a href="{{ route('home') }}">Andalucía Logo</a>
 		</div>
-		<div class="catFilter left">
+		<div class="catFilter left large-6">
 	    	{{$categoryfilter}}
 	    </div>
 
@@ -47,6 +47,7 @@
 	    	</a><br>
 			<ul id="drop" class="f-dropdown" data-dropdown-content>
 			  <li><a href="#">Editar mi pefil</a></li>
+			  <li><a href="#">Mis pedidos</a></li>
 			</ul>
 				    </div>
 	</header>

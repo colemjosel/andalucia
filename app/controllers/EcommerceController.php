@@ -53,6 +53,7 @@ class EcommerceController extends BaseController {
     {
         $user_id = '1';
         $estado = 'pendiente';
+        $items2 = array();
 
         $data = Request::all();
  
@@ -61,10 +62,12 @@ class EcommerceController extends BaseController {
                 $totalCost = $value;
             }else if($key == 'items'){
                 $items = $value;
+                foreach ($value as $item) {
+                    $items2[] = $item;
+                }
             }
             
         } 
-
 
         $pedido = new Pedidos;
 
@@ -78,9 +81,11 @@ class EcommerceController extends BaseController {
 
         $the_id = $pedido->id;
 
-        $comprobante = array('user_id' => $user_id, 'id' => $the_id, 'totalCost' => $totalCost, 'items' => $items, 'estado' => $estado);
+        $comprobante = array('user_id' => $user_id, 'id' => $the_id, 'totalCost' => $totalCost, 'estado' => $estado);
 
-        return View::make('ecommerce.checkout', compact('comprobante', 'the_id'));
+        $resultado = array_merge((array)$comprobante, (array)$items2);
+
+        return View::make('ecommerce.checkout', compact('resultado', 'the_id'));
     }
 
     //PDF
@@ -88,9 +93,11 @@ class EcommerceController extends BaseController {
     {
         $pedido = Pedidos::where('id', '=', $id)->get();
 
-        $pdf = App::make('dompdf');
-        $pdf->loadHTML('<h1>Comprobante</h1><ul><li><b>User:</b> '.$pedido[0]->user_id.'</li><li><b>ID:</b>'.$pedido[0]->id.'</li><li><b>Costo:</b>'.$pedido[0]->totalCost.'</li><li><b>Estado:</b>'.$pedido[0]->estado.'</li><li><b>items:</b>'.$pedido[0]->products_id);
-        return $pdf->stream();
+        print_r($pedido[0]->products_id);
+
+        //$pdf = App::make('dompdf');
+        //$pdf->loadHTML('<h1>Comprobante</h1><ul><li><b>Cliente:</b> '.$pedido[0]->user_id.'</li><li><b>ID:</b>'.$pedido[0]->id.'</li><li><b>Costo:</b>'.$pedido[0]->totalCost.'</li><li><b>Estado:</b>'.$pedido[0]->estado.'</li><li><b>Productos:</b>'.$pedido[0]->products_id);
+        //return $pdf->stream();
     }
 
     //Productos más votados

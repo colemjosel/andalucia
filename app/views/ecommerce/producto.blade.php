@@ -28,6 +28,10 @@
     </div>
 </div>
 
+<div class="row">
+    {{Commentario::comments($comments, $producto[0]->id, $rate)}}
+</div>
+
 <div class="losMasVotados categoria row">
     <h4>Los más votados</h4>
     @foreach($masvotados as $index => $prod)
@@ -58,7 +62,4 @@
     @endforeach
 </div>
 
-<div class="row">
-    {{Commentario::comments($comments, $producto[0]->id, $rate)}}
-</div>
 @stop
