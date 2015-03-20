@@ -53,6 +53,18 @@
 	<section class="contenido">
     	@yield('cart')
     </section>
+    <footer>
+    	<div class="logo">
+			<a href="{{ route('home') }}">Andalucía Logo</a>
+		</div>
+
+		<dl class="sub-nav">
+		  <dd><a href="#">¿Quienes Sómos?</a></dd>
+		  <dd><a href="#">Téminos Legales</a></dd>
+		  <dd><a href="#">¿Cómo reclamar los premios?</a></dd>
+		</dl>
+    	
+    </footer>
 </div>
 
 @stop

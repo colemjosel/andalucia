@@ -14,7 +14,7 @@
                 <div class="panel">
                     <h3><a href="{{ route('producto',[$prod->id]) }}"> {{$prod->titulo}}</a></h3>
                     <div class="rate">
-                        <ngcart-rate service="http" settings="{ url:'http://localhost/andalucia/public/rate' }" reload="$scope.$broadcast('REFRESH');" valor="{{$rate[$var]->rate}}" id="{{ $prod->id }}" user="1"></ngcart-rate>
+                        <ngcart-rate service="http" settings="{ url:'http://localhost/andalucia/public/rate' }"  valor="{{$rate[$var]->rate}}" id="{{ $prod->id }}" user="1"></ngcart-rate>
                         {{--*/ $var++; /*--}}
                     </div>
                     <div class="costo">

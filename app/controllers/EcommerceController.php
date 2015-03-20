@@ -35,9 +35,11 @@ class EcommerceController extends BaseController {
 
         $rate = $this->rate($comments);
 
-
         $producto = Productos::where('id', '=', $id)->get();
-        return View::make('ecommerce.producto', compact('producto', 'categoryfilter', 'comments', 'rate'));
+
+        $masvotados = $this->masvotados();
+
+        return View::make('ecommerce.producto', compact('producto', 'categoryfilter', 'comments', 'rate', 'masvotados'));
     }
 
     public function showSummary()
@@ -89,6 +91,35 @@ class EcommerceController extends BaseController {
         $pdf = App::make('dompdf');
         $pdf->loadHTML('<h1>Comprobante</h1><ul><li><b>User:</b> '.$pedido[0]->user_id.'</li><li><b>ID:</b>'.$pedido[0]->id.'</li><li><b>Costo:</b>'.$pedido[0]->totalCost.'</li><li><b>Estado:</b>'.$pedido[0]->estado.'</li><li><b>items:</b>'.$pedido[0]->products_id);
         return $pdf->stream();
+    }
+
+    //Productos más votados
+    public function masvotados(){
+
+        $products2 = array();
+        $productos = Productos::all();
+
+        foreach($productos as $pro){
+            $id = $pro->id;
+            $comments = Comments::where('component_item_id', '=', $id)->get();
+
+            $total = count($comments);
+
+            if($total > 0) {
+                $pro->rate = $this->rate($comments);
+                $products2[] = $pro;
+            }
+        }
+
+        usort($products2, array($this, 'sort_by_order'));
+
+        return $products2;
+    }
+
+    public function sort_by_order ($a, $b)
+    {
+        return $b['rate'] - $a['rate'];
+
     }
 
     //Category Filter
