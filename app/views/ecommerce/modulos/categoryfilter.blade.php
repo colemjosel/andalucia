@@ -5,6 +5,6 @@
 		<li><a href="{{ route('categoria',[$cat->id]) }}">{{$cat->name}}</a></li>
 	@endforeach
 </ul>
-<div class="search left large-9">
+<div class="search left large-8">
 	{{ Field::text('search', '', ['placeholder' => 'Buscar...', 'class' => 'search_input']) }}
 </div>

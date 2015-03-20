@@ -22,7 +22,7 @@
 		<div class="logo left">
 			<a href="{{ route('home') }}">Andalucía Logo</a>
 		</div>
-		<div class="catFilter left large-6">
+		<div class="catFilter left large-4">
 	    	{{$categoryfilter}}
 	    </div>
 
